@@ -38,20 +38,20 @@ module.exports = function Registration(local) {
         await local.query("DELETE FROM registration_numbers")
     }
 
-    async function displayFun(argPassed) {
+    // async function displayFun(argPassed) {
 
-        let element = document.getElementById("myList");
-        while (element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
+    //     let element = document.getElementById("myList");
+    //     while (element.firstChild) {
+    //         element.removeChild(element.firstChild);
+    //     }
     
-        for (var i = 0; i < argPassed.length; i++) {
-            var node = document.createElement("li");
-            var textnode = document.createTextNode(argPassed[i]);
-            node.appendChild(textnode);
-            element.appendChild(node);
-        }
-    }
+    //     for (var i = 0; i < argPassed.length; i++) {
+    //         var node = document.createElement("li");
+    //         var textnode = document.createTextNode(argPassed[i]);
+    //         node.appendChild(textnode);
+    //         element.appendChild(node);
+    //     }
+    // }
 
 
     // function setRegi(carReg) {
