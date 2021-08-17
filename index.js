@@ -45,8 +45,10 @@ app.get('/addFlash', function (req, res) {
     res.redirect('/');
 });
 
-app.get('/', function (req, res) {
-    res.render('index');
+app.get('/', async function (req, res) {
+    res.render('index', {
+        model: await RegistrationOS.getRegNumbers()
+    });
 })
 
 app.post('/reg_number', async function (req, res, next) {
@@ -71,7 +73,9 @@ app.post('/reg_number', async function (req, res, next) {
             console.log(RegistrationOS.getMessage())
             req.flash('info', await RegistrationOS.getMessage())
         }
-        res.render('index')
+        res.render('index', {
+            model: await RegistrationOS.getRegNumbers()
+        })
     } catch (error) {
         next(error);
     }

@@ -25,8 +25,13 @@ module.exports = function Registration(local) {
 
     }
 
+    async function getRegNumbers(){
+        const sqlShow = await local.query("SELECT * FROM registration_numbers");
+        return sqlShow.rows;
+    }
+
     async function getRegistrationNum(){
-        const sqlShow = await pool.query("SELECT * FROM registration_numbers ORDER BY regnumber");
+        const sqlShow = await local.query("SELECT * FROM registration_numbers ORDER BY regnumber");
         return sqlShow.rows;
     }
 
@@ -137,6 +142,7 @@ module.exports = function Registration(local) {
 
 
     return {
+        getRegNumbers,
         Registration,
         insertReg,
         getRegistrationNum,
