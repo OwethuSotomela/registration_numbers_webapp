@@ -1,0 +1,54 @@
+<div class="all">
+
+    <h1>Registration Numbers:</h1>
+    {{#if messages.info }}
+    <div class="errors">{{messages.info}}</div>
+    {{/if}}
+
+    <div class="first">
+        <form action="/reg_number" method="POST">
+            <div class="">
+                <input type="text" placeholder="Eg. CA 123-456, CY 123456, CX 123 456" class="townName"
+                    name="inputElement"><br>
+            </div>
+
+            <div class="but">
+                <button class="addButton" name="addButton" type="submit"><em>Add</em></button>
+            </div>
+
+    </div>
+    <div class="sec">
+        <div class="but">
+            <label class="">
+                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CA">
+                <span class="label-body">Cape Town</span>
+            </label>
+            <label class="">
+                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CL">
+                <span class="label-body">Stellenbotsch</span>
+            </label>
+            <label class="">
+                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CW">
+                <span class="label-body">Woercester</span>
+            </label>
+            <label class="">
+                <input type="radio" name="itemType1" class="itemTypeRadio1" value="">
+                <span class="label-body">All</span>
+            </label>
+            </form>
+        </div>
+        <div class="butt1">
+            <form action="/display" method="POST">
+                <button class="showButton" type="submit"><em>Show</em></button>
+            </form>
+            <form action="/reset" method="POST">
+                <button class="resetButton" type="submit"><em>Reset</em></button>
+            </form>
+        </div>
+        <br>
+    </div>
+
+    <div class="/">
+        <ul id="myList" style="list-style: none;">{{regNum}}</ul>
+    </div>
+</div>
