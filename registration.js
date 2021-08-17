@@ -141,7 +141,7 @@ module.exports = function Registration(local) {
         insertReg,
         getRegistrationNum,
         emptyDB,
-        displayFun,
+        // displayFun,
         // setRegi,
         // regPlate,
         getRegi,
