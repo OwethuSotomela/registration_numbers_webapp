@@ -76,6 +76,11 @@ app.post('/reg_number', async function (req, res, next) {
         next(error);
     }
 })
+
+app.get("/reg_number", async (req, res) => {
+    res.render("reg_number", { model: await RegistrationOS.getRegistrationNum() });
+});
+
 app.post('/reset', async function (req, res) {
     req.flash('info', 'Database successfully deleted');
     await RegistrationOS.emptyDB();

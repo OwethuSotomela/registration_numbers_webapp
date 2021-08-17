@@ -25,12 +25,32 @@ module.exports = function Registration(local) {
 
     }
 
+    async function getRegistrationNum(){
+        const sqlShow = await pool.query("SELECT * FROM registration_numbers ORDER BY regnumber");
+        return sqlShow.rows;
+    }
+
     function getMessage() {
         return message;
     }
 
     async function emptyDB() {
         await local.query("DELETE FROM registration_numbers")
+    }
+
+    async function displayFun(argPassed) {
+
+        let element = document.getElementById("myList");
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    
+        for (var i = 0; i < argPassed.length; i++) {
+            var node = document.createElement("li");
+            var textnode = document.createTextNode(argPassed[i]);
+            node.appendChild(textnode);
+            element.appendChild(node);
+        }
     }
 
 
@@ -119,7 +139,9 @@ module.exports = function Registration(local) {
     return {
         Registration,
         insertReg,
+        getRegistrationNum,
         emptyDB,
+        displayFun,
         // setRegi,
         // regPlate,
         getRegi,

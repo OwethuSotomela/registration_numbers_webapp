@@ -48,7 +48,19 @@
         <br>
     </div>
 
-    <div class="/">
-        <ul id="myList" style="list-style: none;">{{regNum}}</ul>
+    <div class="">
+
+        {{#each model}}
+        <ul id="myList" style="list-style: none;"> <a href="/reg_Number/{{regnumber}}">
+                <li>{{regnumber}}</li>
+        </ul>{{/each}}
     </div>
+    {{!--
+    {{#each model}}
+    <ul>
+        <a href="/counter/{{username}}">
+            <li>{{username}}</li>
+        </a>
+    </ul>
+    {{/each}} --}}
 </div>
