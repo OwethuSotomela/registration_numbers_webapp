@@ -40,14 +40,10 @@ const pool = new Pool({
 
 const RegistrationOS = Registration(pool);
 
-app.get('/addFlash', function (req, res) {
-    req.flash('info', 'Flash Message Added');
-    res.redirect('/');
-});
-
 app.get('/', async function (req, res) {
     res.render('index', {
-        model: await RegistrationOS.getRegNumbers()
+        model: await RegistrationOS.getRegNumbers(),
+        towns: await RegistrationOS.prepopulate()
     });
 })
 
@@ -56,10 +52,10 @@ app.post('/reg_number', async function (req, res, next) {
     try {
         let carRegNo = req.body.inputElement.toUpperCase();
         let addButton = req.body.addButton;
-        let selectedLang = req.body.itemType1;
+        let selectedLang = req.body.town;
 
         console.log(addButton);
-        console.log(selectedLang);
+        console.log(`value:  ${selectedLang}`);
         console.log(carRegNo);
 
         var regx1App = /[A-Z]{2}\s[0-9]{6}$/.test(carRegNo);
@@ -74,16 +70,23 @@ app.post('/reg_number', async function (req, res, next) {
             req.flash('info', await RegistrationOS.getMessage())
         }
         res.render('index', {
-            model: await RegistrationOS.getRegNumbers()
+        towns: await RegistrationOS.prepopulate(),
+        model: await RegistrationOS.getRegNumbers()
         })
     } catch (error) {
         next(error);
     }
 })
 
-app.get("/reg_number", async (req, res) => {
-    res.render("reg_number", { model: await RegistrationOS.getRegistrationNum() });
-});
+app.post('/showFlitter', async function (req, res){
+    req.flash('info', await RegistrationOS.getMessage())
+    var vele = req.body.town;
+    console.log(vele)
+    res.render('index', { 
+        towns: await RegistrationOS.prepopulate(),
+        model : await RegistrationOS.regPlate(req.body.town)})
+
+})
 
 app.post('/reset', async function (req, res) {
     req.flash('info', 'Database successfully deleted');

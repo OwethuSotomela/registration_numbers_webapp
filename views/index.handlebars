@@ -15,54 +15,37 @@
             <div class="but">
                 <button class="addButton" name="addButton" type="submit"><em>Add</em></button>
             </div>
+        </form>
 
     </div>
-    <div class="sec">
-        <div class="but">
-            <label class="">
-                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CA">
-                <span class="label-body">Cape Town</span>
-            </label>
-            <label class="">
-                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CL">
-                <span class="label-body">Stellenbotsch</span>
-            </label>
-            <label class="">
-                <input type="radio" name="itemType1" class="itemTypeRadio1" value="CW">
-                <span class="label-body">Woercester</span>
-            </label>
-            <label class="">
-                <input type="radio" name="itemType1" class="itemTypeRadio1" value="">
-                <span class="label-body">All</span>
-            </label>
-            </form>
-        </div>
-        <div class="butt1">
-            <form action="/display" method="POST">
+
+    <form action="/showFlitter" method="POST">
+        <div class="sec">
+            <div class="but">
+            {{#each towns}}
+                <label class="">
+                    <input type="radio" name="town" class="itemTypeRadio1" value="{{{id}}}">
+                    <span class="label-body">{{towns}} </span>  
+                </label>
+            {{/each}}
+            </div>
+            
+            <div class="butt1">
                 <button class="showButton" type="submit"><em>Show</em></button>
-            </form>
-            <form action="/reset" method="POST">
-                <button class="resetButton" type="submit"><em>Reset</em></button>
-            </form>
-        </div>
-        <br>
-    </div>
+    </form>
+    <form action="/reset" method="POST">
+        <button class="resetButton" type="submit"><em>Reset</em></button>
+    </form>
+</div>
+<br>
+</div>
 
-    <div class="">
-        {{#each model}}
-        <ul id="myList" style="list-style: none;"> <a href="/reg_Number/{{regnumber}}">
-                <li>{{regnumber}}</li>
-        </ul>{{/each}}
+<div class="">
+    {{#each model}}
+    <ul id="myList" style="list-style: none;"> <a href="/reg_Number/{{regnumber}}">
+            <li>{{regnumber}}</li>
+    </ul>{{/each}}
 
-    
-    {{!-- {{#each model}}
-    <ul>
-        <a href="/reg_Number/{{username}}">
-            <li>{{username}}</li>
-        </a>
-    </ul>
-    {{/each}} --}}
-
-    </div>
+</div>
 
 </div>

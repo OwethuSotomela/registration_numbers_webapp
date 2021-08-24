@@ -22,16 +22,10 @@ module.exports = function Registration(local) {
                 message = "Registration number already added!"
             }
         }
-
     }
 
-    async function getRegNumbers(){
+    async function getRegNumbers() {
         const sqlShow = await local.query("SELECT * FROM registration_numbers");
-        return sqlShow.rows;
-    }
-
-    async function getRegistrationNum(){
-        const sqlShow = await local.query("SELECT * FROM registration_numbers ORDER BY regnumber");
         return sqlShow.rows;
     }
 
@@ -43,100 +37,29 @@ module.exports = function Registration(local) {
         await local.query("DELETE FROM registration_numbers")
     }
 
-    // async function displayFun(argPassed) {
-
-    //     let element = document.getElementById("myList");
-    //     while (element.firstChild) {
-    //         element.removeChild(element.firstChild);
-    //     }
-    
-    //     for (var i = 0; i < argPassed.length; i++) {
-    //         var node = document.createElement("li");
-    //         var textnode = document.createTextNode(argPassed[i]);
-    //         node.appendChild(textnode);
-    //         element.appendChild(node);
-    //     }
-    // }
-
-
-    // function setRegi(carReg) {
-
-    //     carReg = carReg.toUpperCase();
-
-    //     var regx = /[A-Z]{2}\s[0-9]{6}$/.test(carReg)
-    //     var regx1 = /[A-Z]{2}\s[0-9]{3}\s[0-9]{3}$/.test(carReg)
-    //     var regx2 = /[A-Z]{2}\s[0-9]{3}\-[0-9]{3}$/.test(carReg)
-
-    //     if (!regx && !regx1 && !regx2) {
-    //         message = "Format doesn't match the required!"
-    //         return false;
-    //     } else {
-    //         if (!regListApp.includes(carReg)) {
-    //             regListApp.push(carReg)
-    //             message = "Car registration added successfully!";
-    //             return true;
-    //         } else {
-    //             message = "Car registration number already entered!";
-    //             return false;
-    //         }
-    //     }
-    // }
-
-    //    async function setRegApp(carRegApp) {
-
-    //         carRegApp = carRegApp.toUpperCase();
-
-    //         var regx1App = /[A-Z]{2}\s[0-9]{6}$/.test(carRegApp);
-    //         var regx2App = /[A-Z]{2}\s[0-9]{3}\s[0-9]{3}$/.test(carRegApp);
-    //         var regx3App = /[A-Z]{2}\s[0-9]{3}\-[0-9]{3}$/.test(carRegApp);
-
-    //         if (!regx1App && !regx2App && !regx3App) {
-    //             messageApp = "Format doesnt match the required!"
-    //         } else {
-    //             if (!regListApp.includes(carRegApp)) {
-    //                 regListApp.push(carRegApp);
-    //                 message = "Car registration added successfully!";
-    //                 return true;
-    //             } else {
-    //                 message = "Car registration number already entered!";
-    //             }
-    //         }
-    //     }
-
-    // function regPlate(regPlate) {
-    //     filterTown = []
-    //     for (var i = 0; i < regList.length; i++) {
-    //         if (regList[i].startsWith(regPlate)) {
-    //             filterTown.push(regList[i])
-    //         }
-    //     }
-    // }
-    async function regPlateApp(regApp) {
-        filterTownApp = [];
-        for (var i = 0; i < regListApp.length; i++) {
-            if (regListApp[i].startsWith(regApp)) {
-                filterTownApp.push(regApp);
-            }
-        }
+    async function regPlate(town_id) {
+        var flitteredTown = await local.query(`select * from registration_numbers where town_id = ${town_id} `)
+        return flitteredTown.rows
     }
 
-    async function getFilterTownApp() {
-        return filterTownApp;
+    async function prepopulate(){
+       var towns = await local.query("select * from towns")
+       return towns.rows
     }
 
-    function getFilterTown() {
+    // async function getFilterTownApp() {
+    //     return filterTown;
+    // }
+
+    async function getFilterTown() {
         return filterTown;
     }
 
-    async function getRegApp() {
-        return regListApp;
-    }
+    // async function getReg() {
+    //     return regList;
+    // }
 
-
-
-
-
-    function getRegi() {
+    async function getRegi() {
         return regList;
     }
 
@@ -145,18 +68,15 @@ module.exports = function Registration(local) {
         getRegNumbers,
         Registration,
         insertReg,
-        getRegistrationNum,
         emptyDB,
-        // displayFun,
-        // setRegi,
-        // regPlate,
         getRegi,
         getMessage,
         getFilterTown,
-        // setRegApp,
-        regPlateApp,
-        getFilterTownApp,
-        getRegApp,
+        regPlate,
+        prepopulate
+        // regPlateApp,
+        // getFilterTownApp,
+        // getRegApp,
     }
 }
 
