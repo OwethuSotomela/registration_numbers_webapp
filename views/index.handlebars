@@ -8,43 +8,44 @@
     <div class="first">
         <form action="/reg_number" method="POST">
             <div class="">
-                <input type="text" placeholder="Eg. CA 123-456, CY 123456, CX 123 456" class="townName"
-                    name="inputElement"><br>
+                <input type="text" placeholder="Eg. CA 123-456, CL 123456, CW 123 456" class="townName"
+                    name="inputElement">
             </div>
-
             <div class="but">
                 <button class="addButton" name="addButton" type="submit"><em>Add</em></button>
             </div>
         </form>
-
     </div>
 
     <form action="/showFlitter" method="POST">
         <div class="sec">
             <div class="but">
-            {{#each towns}}
+                {{#each towns}}
                 <label class="">
                     <input type="radio" name="town" class="itemTypeRadio1" value="{{{id}}}">
-                    <span class="label-body">{{towns}} </span>  
+                    <span class="label-body">{{towns}} </span>
                 </label>
-            {{/each}}
+                {{/each}}
             </div>
-            
             <div class="butt1">
                 <button class="showButton" type="submit"><em>Show</em></button>
+    </form>
+    <form action="/showAll" method="GET">
+        <button class="showAllButton" type="submit">Show All</button>
     </form>
     <form action="/reset" method="POST">
         <button class="resetButton" type="submit"><em>Reset</em></button>
     </form>
 </div>
 <br>
-</div>
+{{!-- </div> --}}
 
 <div class="">
     {{#each model}}
     <ul id="myList" style="list-style: none;"> <a href="/reg_Number/{{regnumber}}">
             <li>{{regnumber}}</li>
-    </ul>{{/each}}
+    </ul>
+    {{/each}}
 
 </div>
 

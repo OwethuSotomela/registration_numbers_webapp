@@ -43,7 +43,7 @@ const RegistrationOS = Registration(pool);
 app.get('/', async function (req, res) {
     res.render('index', {
         model: await RegistrationOS.getRegNumbers(),
-        towns: await RegistrationOS.prepopulate()
+        towns: await RegistrationOS.prepopulate(),
     });
 })
 
@@ -63,7 +63,7 @@ app.post('/reg_number', async function (req, res, next) {
         var regx3App = /[A-Z]{2}\s[0-9]{3}\-[0-9]{3}$/.test(carRegNo);
 
         if (!regx1App && !regx2App && !regx3App) {
-            req.flash('info', 'Format doesnt match the required!');
+            req.flash('info', 'Not a supported format type!');
         } else {
             await RegistrationOS.insertReg(carRegNo)
             console.log(RegistrationOS.getMessage())
@@ -86,6 +86,13 @@ app.post('/showFlitter', async function (req, res){
         towns: await RegistrationOS.prepopulate(),
         model : await RegistrationOS.regPlate(req.body.town)})
 
+})
+
+app.get('/showAll', async function(req, res){
+    res.render('index', {
+        towns: await RegistrationOS.prepopulate(),
+        model: await RegistrationOS.getRegNumbers()
+    })
 })
 
 app.post('/reset', async function (req, res) {

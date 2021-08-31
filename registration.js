@@ -4,16 +4,12 @@ module.exports = function Registration(local) {
     var message = "";
     var filterTown = []
 
-    // messageApp = "";
-    // var regListApp = local;
-    // var filterTownApp = [];
-
     async function insertReg(regNumber) {
         var strFirstTwo = regNumber.substring(0, 2);
         const sqlTown = await local.query(`SELECT * FROM towns WHERE location = $1`, [strFirstTwo]);
         const sqlNumb = await local.query(`SELECT * FROM registration_numbers WHERE regnumber = '${regNumber}'`);
         if (sqlTown.rows.length == 0) {
-            message = "Sorry we don't accept that!"
+            message = "Enter registration numbers for selected towns only!"
         } else {
             if (sqlNumb.rows.length == 0) {
                 await local.query(`insert into registration_numbers (regnumber, town_id) values ('${regNumber}', ${sqlTown.rows[0].id})`)
@@ -38,31 +34,22 @@ module.exports = function Registration(local) {
     }
 
     async function regPlate(town_id) {
-        var flitteredTown = await local.query(`select * from registration_numbers where town_id = ${town_id} `)
+        var flitteredTown = await local.query(`SELECT * from registration_numbers where town_id = ${town_id} `)
         return flitteredTown.rows
     }
 
-    async function prepopulate(){
-       var towns = await local.query("select * from towns")
-       return towns.rows
+    async function prepopulate() {
+        var towns = await local.query("SELECT * from towns")
+        return towns.rows
     }
-
-    // async function getFilterTownApp() {
-    //     return filterTown;
-    // }
 
     async function getFilterTown() {
         return filterTown;
     }
 
-    // async function getReg() {
-    //     return regList;
-    // }
-
     async function getRegi() {
         return regList;
     }
-
 
     return {
         getRegNumbers,
@@ -74,9 +61,6 @@ module.exports = function Registration(local) {
         getFilterTown,
         regPlate,
         prepopulate
-        // regPlateApp,
-        // getFilterTownApp,
-        // getRegApp,
     }
 }
 
