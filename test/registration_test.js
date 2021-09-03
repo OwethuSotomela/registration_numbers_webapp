@@ -39,29 +39,27 @@ describe('List of registration numbers', async function () {
         assert.equal('CW 667-987', getRegNumbers())
         assert.equal('CL 254 369', getRegNumbers())
         assert.equal('CA 890-098', getRegNumbers())
-
     })
+})
 
 
-    describe('Deleting Database', async function () {
-        it('should delete from registration_App database', async function () {
-            await registration.emptyDB();
-            assert.equal(0, await registration.prepopulate())
-        })
+describe('Deleting Database', async function () {
+    it('should delete from registration_App database', async function () {
+        await registration.emptyDB();
+        assert.equal(0, await registration.prepopulate())
     })
+})
 
-    describe("Returning error messages", async function(){
+describe("Returning error messages", async function () {
 
-        it('Should return message "Registration number already entered"', function () {
-            let registration = Registration([])
-            var regNumber = "CA 465-857"
+    it('Should return the message "Registration number already entered"', async function () {
+        let registration = Registration([])
+        var regNumber = "CA 465-857"
 
-            registration.insertReg(regNumber)
-            registration.insertReg(regNumber)
+        await registration.insertReg(regNumber)
+        await registration.insertReg(regNumber)
 
-            assert.equal('CA 465-857', registration.getRegNumbers(regNumber))
-            assert.equal('Registration number already added!', registration.getMessage())
-        })
+        assert.equal('CA 465-857', await registration.getRegNumbers(regNumber))
+        assert.equal('Registration number already added!', await registration.getMessage())
     })
-   
 })

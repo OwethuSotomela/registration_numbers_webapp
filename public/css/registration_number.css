@@ -22,12 +22,22 @@ section{
     flex-direction: row;
     justify-content: center;
 }
-.errors{
+.feedback{
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin-bottom: 3%;
     color: green;
+    font-size: 3vh;
+    height: 5vh;
+    background-color: white;
+}
+.errors{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 3%;
+    color: red;
     font-size: 3vh;
     height: 5vh;
     background-color: white;

@@ -63,7 +63,7 @@ app.post('/reg_number', async function (req, res, next) {
         var regx3App = /[A-Z]{2}\s[0-9]{3}\-[0-9]{3}$/.test(carRegNo);
 
         if (!regx1App && !regx2App && !regx3App) {
-            req.flash('info', 'Not a supported format type!');
+            req.flash('error', 'Not a supported format type!');
         } else {
             await RegistrationOS.insertReg(carRegNo)
             console.log(RegistrationOS.getMessage())

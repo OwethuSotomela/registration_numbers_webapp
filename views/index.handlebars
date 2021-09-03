@@ -2,9 +2,13 @@
 
     <h1>Registration Numbers:</h1>
     {{#if messages.info }}
-    <div class="errors">{{messages.info}}</div>
+    <div class="feedback">{{messages.info}}</div>
     {{/if}}
 
+    {{#if messages.error}}
+    <div class="errors">{{messages.error}}</div>
+    {{/if}}
+    
     <div class="first">
         <form action="/reg_number" method="POST">
             <div class="">
