@@ -2,7 +2,7 @@ const assert = require("assert");
 const Registration = require("../registration");
 const { Pool } = require("pg");
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/registration_App';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:codex123@localhost:5432/registration_App';
 
 const pool = new Pool({
     connectionString: connectionString,
@@ -13,8 +13,9 @@ const pool = new Pool({
 
 const registration = Registration(pool);
 
-describe('Registration number list', async function () {
+describe('List of registration numbers', async function () {
     it('Should display the list of all entered registration numbers', async function () {
+
         await registration.insertReg('CA 123489');
         await registration.insertReg('CL 890-765');
         await registration.insertReg('CW 667-987');
@@ -32,7 +33,7 @@ describe('Registration number list', async function () {
         // assert.equal('CW 667-987', regNumber3);
         // assert.equal('CL 254 369', regNumber4);
         // assert.equal('CA 890-098', regNumber5);
-        
+
         assert.equal('CA 123489', getRegNumbers())
         assert.equal('CL 890-765', getRegNumbers())
         assert.equal('CW 667-987', getRegNumbers())
@@ -42,15 +43,25 @@ describe('Registration number list', async function () {
     })
 
 
-    it('Should return message "Registration number already entered"', function () {
-        let myHello = Greeting([])
-        var string = "Owethu"
-        var langauge = "Sawubona, "
-
-        myHello.setName(string)
-        myHello.setName(string)
-
-        assert.equal('Sawubona, Owethu', myHello.firstL(string, langauge))
-        assert.equal('Name already greeted!', myHello.getMessage())
+    describe('Deleting Database', async function () {
+        it('should delete from registration_App database', async function () {
+            await registration.emptyDB();
+            assert.equal(0, await registration.prepopulate())
+        })
     })
+
+    describe("Returning error messages", async function(){
+
+        it('Should return message "Registration number already entered"', function () {
+            let registration = Registration([])
+            var regNumber = "CA 465-857"
+
+            registration.insertReg(regNumber)
+            registration.insertReg(regNumber)
+
+            assert.equal('CA 465-857', registration.getRegNumbers(regNumber))
+            assert.equal('Registration number already added!', registration.getMessage())
+        })
+    })
+   
 })

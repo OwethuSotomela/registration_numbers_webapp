@@ -101,10 +101,6 @@ app.post('/reset', async function (req, res) {
     res.redirect('/');
 })
 
-// app.post('/reg_number/:regNumber', function (req, res) {
-//     res.render('index', {})
-// })
-
 const PORT = process.env.PORT || 8085;
 app.listen(PORT, function () {
     console.log("App started at port:", PORT)
