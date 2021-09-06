@@ -2,7 +2,7 @@ const assert = require("assert");
 const Registration = require("../registration");
 const { Pool } = require("pg");
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/travis_ci_test';
 
 const pool = new Pool({
     connectionString: connectionString,
