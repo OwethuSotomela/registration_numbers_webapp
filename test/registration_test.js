@@ -40,3 +40,31 @@ describe('List of registration numbers', async function () {
 
     })
 })
+
+describe("Inserts registration numbers to the database", async function () {
+    it("Should insert registration numbers to the database", async function () {
+       
+        await registration.emptyDB();
+
+        var all = ["CA 456-456", "CA 123-123", "CW 456-456", "CL 456-456", "CA 589-365", "CL 589-357", "CW 254-365"]
+
+        var regList = [];
+
+        await registration.insertReg("CA 456-456")
+        await registration.insertReg("CA 123-123")
+        await registration.insertReg("CW 456-456")
+        await registration.insertReg("CL 456-456")
+        await registration.insertReg("CA 589-365")
+        await registration.insertReg("CL 589-357")
+        await registration.insertReg("CW 254-365")
+
+        var getRegNumbs = await registration.getRegNumbers()
+
+        getRegNumbs.forEach(element => {
+            regList.push(element.regnumber)
+        });
+
+        assert.equal(all.length, regList.length)
+    })
+})
+
