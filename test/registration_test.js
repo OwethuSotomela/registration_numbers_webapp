@@ -120,7 +120,26 @@ describe("Filtering registration numbers", async function () {
         })
 
         assert.deepEqual(woester, regListWoester);
+        await registration.emptyDB();
+
     })
+})
+
+describe("Returns the towns in the database", async function(){
+    it("Should prepopulate towns", async function(){
+        
+        var towns = ['Cape Town', 'Stellenbotsch', 'Woercester']
+        var getTown = []
+
+        var getDBTowns = await registration.prepopulate()
+        getDBTowns.forEach(element => {
+            getTown.push(element.towns)
+        })
+
+        assert.deepEqual(towns, getTown)
+        getTown = []
+    })
+    
 })
 
 
