@@ -107,6 +107,20 @@ describe("Filtering registration numbers", async function () {
 
         assert.deepEqual(stellenbotch, regListStellenbotch);
     })
+
+    it("Should return registration numbers for Woester", async function(){
+
+        var woester = ["CW 456-456", "CW 254-365"]
+
+        var regListWoester = []
+
+        var getRegNumberFilter = await registration.regPlate(3)
+        getRegNumberFilter.forEach(element => {
+            regListWoester.push(element.regnumber)
+        })
+
+        assert.deepEqual(woester, regListWoester);
+    })
 })
 
 
