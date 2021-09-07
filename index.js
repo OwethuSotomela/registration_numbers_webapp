@@ -5,6 +5,7 @@ const flash = require('express-flash');
 const { Pool } = require("pg");
 const session = require('express-session');
 const Registration = require('./registration');
+const routes = require('./routesFile')
 
 const app = express();
 
@@ -39,67 +40,17 @@ const pool = new Pool({
 });
 
 const RegistrationOS = Registration(pool);
+const Routes = routes(RegistrationOS);
 
-app.get('/', async function (req, res) {
-    res.render('index', {
-        model: await RegistrationOS.getRegNumbers(),
-        towns: await RegistrationOS.prepopulate(),
-    });
-})
+app.get('/', Routes.home)
 
-app.post('/reg_number', async function (req, res, next) {
+app.post('/reg_number', Routes.insertRoute)
 
-    try {
-        let carRegNo = req.body.inputElement.toUpperCase();
-        let addButton = req.body.addButton;
-        let selectedLang = req.body.town;
+app.post('/showFlitter', Routes.showReg)
 
-        console.log(addButton);
-        console.log(`value:  ${selectedLang}`);
-        console.log(carRegNo);
+app.get('/showAll', Routes.showAll)
 
-        var regx1App = /[A-Z]{2}\s[0-9]{6}$/.test(carRegNo);
-        var regx2App = /[A-Z]{2}\s[0-9]{3}\s[0-9]{3}$/.test(carRegNo);
-        var regx3App = /[A-Z]{2}\s[0-9]{3}\-[0-9]{3}$/.test(carRegNo);
-
-        if (!regx1App && !regx2App && !regx3App) {
-            req.flash('error', 'Not a supported format type!');
-        } else {
-            await RegistrationOS.insertReg(carRegNo)
-            console.log(RegistrationOS.getMessage())
-            req.flash('info', await RegistrationOS.getMessage())
-        }
-        res.render('index', {
-        towns: await RegistrationOS.prepopulate(),
-        model: await RegistrationOS.getRegNumbers()
-        })
-    } catch (error) {
-        next(error);
-    }
-})
-
-app.post('/showFlitter', async function (req, res){
-    req.flash('info', await RegistrationOS.getMessage())
-    var vele = req.body.town;
-    console.log(vele)
-    res.render('index', { 
-        towns: await RegistrationOS.prepopulate(),
-        model : await RegistrationOS.regPlate(req.body.town)})
-
-})
-
-app.get('/showAll', async function(req, res){
-    res.render('index', {
-        towns: await RegistrationOS.prepopulate(),
-        model: await RegistrationOS.getRegNumbers()
-    })
-})
-
-app.post('/reset', async function (req, res) {
-    req.flash('info', 'Database successfully deleted');
-    await RegistrationOS.emptyDB();
-    res.redirect('/');
-})
+app.post('/reset', Routes.clear)
 
 const PORT = process.env.PORT || 8085;
 app.listen(PORT, function () {
